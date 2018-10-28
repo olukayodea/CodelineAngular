@@ -10,7 +10,7 @@ mainApp.config(function($routeProvider) {
     .when("/search/:q", {
         templateUrl : "search.html"
     })
-    .when("/weather", {
+    .when("/weather/:woeid", {
         templateUrl : "weather.html"
     });
 });
@@ -54,7 +54,14 @@ mainApp.controller('HomeController', ['$scope', '$http', '$window', '$location',
         $http.get($scope.URL_WEATHER_FOR_LOCATION + woeid).
         then(function(response) {
             $scope.weathers.push(response.data);
-//            alert(JSON.stringify(response.data));
+        });
+    }
+    
+    $scope.weather_for_one = null;
+    $scope.get_weather_for_one_location = function(woeid) {
+        $http.get($scope.URL_WEATHER_FOR_LOCATION + woeid).
+        then(function(response) {
+            $scope.weather_for_one = response.data;
         });
     }
     
@@ -62,38 +69,34 @@ mainApp.controller('HomeController', ['$scope', '$http', '$window', '$location',
         $scope.weather_for_locations(['2344116', '638242', '44418', '565346', '560743', '9807']);
     }
     
-//    Istanbul, Berlin, London, Helsinki, Dublin, Vancouver
-//    2344116, 638242, 44418, 565346, 560743, 9807
-    
-//    $scope.search_for_location();
-    $scope.weather_for_locations(['2344116', '638242', '44418', '565346', '560743', '9807']);
-//    $scope.weather_for_home_page();
+//    $scope.weather_for_locations(['2344116', '638242', '44418', '565346', '560743', '9807']);
+    $scope.weather_for_home_page();
 
     $scope.go_to_search = function() {
         
-//        $scope.search();
-        
-        $scope.search_for_location();
-//        $scope.weather_for_locations(['2344116', '638242', '44418', '565346', '560743', '9807']);
-        
+        $scope.search_for_location();        
         
         $location.path('/search/' + $scope.search_q);
     }
     
-    $scope.search = function() {
-        
-//        var url = $location.url();
-        
-//        $scope.search_for_location();
-        
-//        alert(url);
-        
+    $scope.go_to_weather = function(woeid) {
+//        alert(woeid);
+        $scope.get_weather_for_one_location(woeid);
+//        $location.path('/search/' + $scope.search_q);
+        $location.path('/weather/' + woeid);
     }
+    
 }])
 .directive('weatherCard', function() {
     return {
         restrict: 'E',
         templateUrl: 'weather-card.html'
+    };
+})
+.directive('dayWeatherCard', function() {
+    return {
+        restrict: 'E',
+        templateUrl: 'day-weather-card.html'
     };
 });
 
