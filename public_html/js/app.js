@@ -89,5 +89,12 @@ mainApp.controller('HomeController', ['$scope', '$http', '$window', '$location',
 //        alert(url);
         
     }
-}]);
+}])
+.directive('weatherCard', function() {
+    return {
+        restrict: 'E',
+        templateUrl: 'weather-card.html'
+    };
+});
+
 
