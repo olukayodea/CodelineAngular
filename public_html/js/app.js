@@ -8,10 +8,10 @@ mainApp.config(function($routeProvider) {
         templateUrl : "home.html"
     })
     .when("/search/:q", {
-        templateUrl : "search.html"
+        templateUrl : "search-route.html"
     })
     .when("/weather/:woeid", {
-        templateUrl : "weather.html"
+        templateUrl : "weather-route.html"
     });
 });
 
@@ -31,7 +31,7 @@ mainApp.controller('HomeController', ['$scope', '$http', '$window', '$location',
         $http.get($scope.URL_SEARCH_FOR_LOCATION + $scope.search_q).
         then(function(response) {
             $scope.locations = response.data;
-            alert(JSON.stringify($scope.locations));
+//            alert(JSON.stringify($scope.locations));
             for(var i = 0; i < $scope.locations.length; i++) {
                 var woeid = $scope.locations[i].woeid;
 //                alert(JSON.stringify(woeid));
@@ -86,17 +86,47 @@ mainApp.controller('HomeController', ['$scope', '$http', '$window', '$location',
         $location.path('/weather/' + woeid);
     }
     
+    $scope.get_icon = function(weather_state_abbr) {
+        
+        var url = "https://www.metaweather.com/static/img/weather/png/64/" + weather_state_abbr + ".png";
+        
+        return url;
+    }
+    
+    $scope.get_day_of_week = function(dateStr) {
+        
+        var today = new Date();
+        
+        if(today.toISOString().substring(0, 10) == dateStr) {
+            return "Today";
+        }
+        else {
+            var d = new Date(dateStr);
+            var weekdayArr = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            var monthArr=['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    
+            var weekday = weekdayArr[d.getDay()];
+            
+            var month = monthArr[d.getMonth()];
+            
+            return weekday + ", " + month + " " + d.getDate();
+        }
+        
+    }
+    
+    
+    
 }])
-.directive('weatherCard', function() {
+.directive('weather', function() {
     return {
         restrict: 'E',
-        templateUrl: 'weather-card.html'
+        templateUrl: 'weather.html'
     };
 })
-.directive('dayWeatherCard', function() {
+.directive('dayWeather', function() {
     return {
         restrict: 'E',
-        templateUrl: 'day-weather-card.html'
+        templateUrl: 'day-weather.html'
     };
 });
 

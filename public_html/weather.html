@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-WEATHER
-<div class="row">
-<div class="col-12 col-md-9">
-  <div class="row">
-    
-    <div class="card col-6 col-lg-4" ng-repeat="day in weather_for_one.consolidated_weather">
-        <day-weather-card></day-weather-card>
-    </div>
-  </div><!--/row-->
-</div><!--/span-->
+
+<div>
+    <br/>
+    <h2>{{ weather.title }}</h2>
+    <br/>
+    <ul class="list-unstyled mt-3 mb-4">
+      <li><img ng-src="{{get_icon(weather.consolidated_weather[0].weather_state_abbr)}}">{{weather.consolidated_weather[0].the_temp | number:0}}°C</li>
+      <li>
+            Max: {{weather.consolidated_weather[0].max_temp | number:0}}°C<br>
+            Min: {{weather.consolidated_weather[0].min_temp | number:0}}°C
+      </li>
+    </ul>
+    <p><button class="btn btn-secondary" type="submit" ng-click="go_to_weather(weather.woeid)">View details &raquo;</button></p>
+    <!--<p><a class="btn btn-secondary" href="#" role="button" ng-click="go_to_weather('638242')">View details &raquo;</a></p>-->
 </div>

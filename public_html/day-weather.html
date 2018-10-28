@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+
+<div>
+    <br/>
+    <h2>{{ get_day_of_week(day.applicable_date) }}</h2>
+    <br/>
+    <ul class="list-unstyled mt-3 mb-4">
+      <li><img ng-src="{{get_icon(day.weather_state_abbr)}}">{{day.the_temp | number:0}}°C</li>
+      <li>
+            Max: {{day.max_temp | number:0}}°C<br>
+            Min: {{day.min_temp | number:0}}°C
+      </li>
+    </ul>
+</div>

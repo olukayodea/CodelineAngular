@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<div class="drow">
+<div class="col-12 col-md-9">
+  <div class="row">
+    <div class="alert alert-danger" role="alert" ng-show="weathers.length == 0">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        No results were found. Try changing the keyword!
+    </div>
+    <div class="card col-6 col-lg-4" ng-repeat="weather in weathers">
+    <weather></weather>
+    </div>
+
+  </div><!--/row-->
+</div><!--/span-->
+</div>
