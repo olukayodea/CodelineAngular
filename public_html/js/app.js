@@ -7,7 +7,7 @@ mainApp.config(function($routeProvider) {
     .when("/", {
         templateUrl : "home.html"
     })
-    .when("/search", {
+    .when("/search/:q", {
         templateUrl : "search.html"
     })
     .when("/weather", {
@@ -28,12 +28,14 @@ mainApp.controller('HomeController', ['$scope', '$http', '$window', '$location',
     
     $scope.search_for_location = function() {
         $scope.weathers = [];
-        $http.get($scope.URL_SEARCH_FOR_LOCATION + search_q).
+        $http.get($scope.URL_SEARCH_FOR_LOCATION + $scope.search_q).
         then(function(response) {
             $scope.locations = response.data;
             alert(JSON.stringify($scope.locations));
             for(var i = 0; i < $scope.locations.length; i++) {
-                $scope.weather_for_location($scope.locations[0].woeid);
+                var woeid = $scope.locations[i].woeid;
+//                alert(JSON.stringify(woeid));
+                $scope.weather_for_location(woeid);
             }
 //            alert(JSON.stringify($scope.locations[0].woeid));
         });
@@ -68,18 +70,21 @@ mainApp.controller('HomeController', ['$scope', '$http', '$window', '$location',
 //    $scope.weather_for_home_page();
 
     $scope.go_to_search = function() {
-        $location.path('/search/' + $scope.search_q);
         
 //        $scope.search();
         
-        $scope.weather_for_locations(['2344116', '638242', '44418', '565346', '560743', '9807']);
+        $scope.search_for_location();
+//        $scope.weather_for_locations(['2344116', '638242', '44418', '565346', '560743', '9807']);
+        
+        
+        $location.path('/search/' + $scope.search_q);
     }
     
     $scope.search = function() {
         
 //        var url = $location.url();
         
-        $scope.search_for_location();
+//        $scope.search_for_location();
         
 //        alert(url);
         
